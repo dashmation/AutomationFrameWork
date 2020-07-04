@@ -9,7 +9,7 @@ public class CommonUtils {
 
 	static Properties prop;
 
-	static String dir = "src/main/resources/com/qa/test/resources/utils.properties";
+	static String dir = "src/main/resources/resources/utils.properties";
 
 	public static String getValue(String key) {
 		String value = null;
