@@ -18,7 +18,6 @@ public class MyStorePage extends CommonMethods {
 	/*
 	 * WebElements
 	 */
-
 	@FindBy(xpath = ".//*[contains(text(),'Popular')]")
 	@CacheLookup
 	private WebElement popularItemSection;
