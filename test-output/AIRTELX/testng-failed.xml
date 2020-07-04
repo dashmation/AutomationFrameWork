@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite thread-count="1" guice-stage="DEVELOPMENT" name="Failed suite [AIRTELX]" parallel="methods">
+  <listeners>
+    <listener class-name="com.automation.frameWork.baseTest.RListeners"/>
+  </listeners>
+  <test thread-count="1" name="AIRTELX(failed)" parallel="methods">
+    <groups>
+      <run>
+        <include name="airtelx"/>
+      </run>
+    </groups>
+    <classes>
+      <class name="com.qa.test.TestScript.MyStoreTest">
+        <methods>
+          <include name="verifyUseCaseOne"/>
+        </methods>
+      </class> <!-- com.qa.test.TestScript.MyStoreTest -->
+    </classes>
+  </test> <!-- AIRTELX(failed) -->
+</suite> <!-- Failed suite [AIRTELX] -->

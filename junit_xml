@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<testsuite failures="1" name="cucumber.runtime.formatter.JUnitFormatter" skipped="0" tests="1" time="4.792681">
+<testcase classname="Assignment Feature" name="Automation task 2" time="4.792681">
+<failure message="java.lang.IllegalArgumentException: Can not set io.appium.java_client.windows.WindowsElement field com.qa.test.WebDriver.Calculator.number0 to org.openqa.selenium.remote.RemoteWebElement$$EnhancerByCGLIB$$d27c0df4&#13;&#10;&#9;at sun.reflect.UnsafeFieldAccessorImpl.throwSetIllegalArgumentException(UnsafeFieldAccessorImpl.java:167)&#13;&#10;&#9;at sun.reflect.UnsafeFieldAccessorImpl.throwSetIllegalArgumentException(UnsafeFieldAccessorImpl.java:171)&#13;&#10;&#9;at sun.reflect.UnsafeObjectFieldAccessorImpl.set(UnsafeObjectFieldAccessorImpl.java:81)&#13;&#10;&#9;at java.lang.reflect.Field.set(Field.java:764)&#13;&#10;&#9;at org.openqa.selenium.support.PageFactory.proxyFields(PageFactory.java:117)&#13;&#10;&#9;at org.openqa.selenium.support.PageFactory.initElements(PageFactory.java:105)&#13;&#10;&#9;at com.qa.test.WebDriver.Calculator.&lt;init&gt;(Calculator.java:54)&#13;&#10;&#9;at stepDefinition.AssignmentStepDefinition.enter_value(AssignmentStepDefinition.java:43)&#13;&#10;&#9;at ✽.Given Enter &quot;65575&quot; value(D:/Cucumber/myTMO/myTelBDDCucumber/src/main/java/feature/assignment.feature:11)&#13;&#10;"><![CDATA[Given Enter "65575" value...................................................failed
+When Click get square root button...........................................skipped
+Then Make sure the result is correct for "65575"............................skipped
+
+StackTrace:
+java.lang.IllegalArgumentException: Can not set io.appium.java_client.windows.WindowsElement field com.qa.test.WebDriver.Calculator.number0 to org.openqa.selenium.remote.RemoteWebElement$$EnhancerByCGLIB$$d27c0df4
+	at sun.reflect.UnsafeFieldAccessorImpl.throwSetIllegalArgumentException(UnsafeFieldAccessorImpl.java:167)
+	at sun.reflect.UnsafeFieldAccessorImpl.throwSetIllegalArgumentException(UnsafeFieldAccessorImpl.java:171)
+	at sun.reflect.UnsafeObjectFieldAccessorImpl.set(UnsafeObjectFieldAccessorImpl.java:81)
+	at java.lang.reflect.Field.set(Field.java:764)
+	at org.openqa.selenium.support.PageFactory.proxyFields(PageFactory.java:117)
+	at org.openqa.selenium.support.PageFactory.initElements(PageFactory.java:105)
+	at com.qa.test.WebDriver.Calculator.<init>(Calculator.java:54)
+	at stepDefinition.AssignmentStepDefinition.enter_value(AssignmentStepDefinition.java:43)
+	at ✽.Given Enter "65575" value(D:/Cucumber/myTMO/myTelBDDCucumber/src/main/java/feature/assignment.feature:11)
+]]></failure>
+</testcase>
+</testsuite>
