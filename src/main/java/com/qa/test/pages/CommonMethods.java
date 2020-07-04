@@ -22,6 +22,7 @@ import com.qa.test.utility.CommonUtils;
 public class CommonMethods extends DriverTech {
 	protected WebDriver driver;
 	JavascriptExecutor javaScriptexe;
+	WebDriverWait wait;
 
 	public CommonMethods(WebDriver driver) {
 		this.driver = driver;
@@ -44,6 +45,8 @@ public class CommonMethods extends DriverTech {
 	public void clickOnElement(WebElement element, String NameOfTheElement) {
 		checkPageIsReady();
 		try {
+			wait = new WebDriverWait(driver, Long.parseLong(CommonUtils.getValue("explicitelyWait")));
+			wait.until(ExpectedConditions.elementToBeClickable(element));
 			element.click();
 			Reporter.log("Clicked On " + NameOfTheElement + " Successfully");
 			System.out.println("Clicked On " + NameOfTheElement + " Successfully");
@@ -69,7 +72,7 @@ public class CommonMethods extends DriverTech {
 
 	public void waitForTheWebElementToBeDisplayed(WebElement element) {
 		try {
-			WebDriverWait wait = new WebDriverWait(driver, Long.parseLong(CommonUtils.getValue("explicitelyWait")));
+			wait = new WebDriverWait(driver, Long.parseLong(CommonUtils.getValue("explicitelyWait")));
 			wait.until(ExpectedConditions.visibilityOf(element));
 		} catch (Exception e) {
 			Reporter.log("Unable to perform waitForTheWebElementToBeDisplayed due to " + e.getMessage());

@@ -84,6 +84,10 @@ public class MyStorePage extends CommonMethods {
 	@CacheLookup
 	private WebElement qauantityOfAddedProduct;
 
+	@FindBy(xpath = ".//*[@title='Close window']")
+	@CacheLookup
+	private WebElement closeWindowCart;
+
 	SoftAssert Verify;
 	Actions action;
 
@@ -110,9 +114,12 @@ public class MyStorePage extends CommonMethods {
 		checkPageIsReady();
 		try {
 			action = new Actions(this.driver);
-			action.moveToElement(target).moveToElement(clickableElement).clickAndHold(clickableElement)
-					.click(clickableElement).build().perform();
-			Thread.sleep(5000);
+			action.moveToElement(target);
+			action.moveToElement(clickableElement);
+			action.clickAndHold(clickableElement).release();
+			action.click(clickableElement).build().perform();
+			Thread.sleep(500);
+			clickOnElement(clickableElement, clickableElement.getText());
 			Reporter.log("Successfully clicked on " + clickableElement.getText());
 		} catch (Exception e) {
 			Reporter.log("Unable to click due to " + e.getMessage());
@@ -170,7 +177,7 @@ public class MyStorePage extends CommonMethods {
 		Verify = new SoftAssert();
 		String featuredProductDesc = getText(productsDesc.get(i));
 		String featuredProductPrice = getText(activePrices.get(i));
-		clickOnMouseHoverItems(productsCatalogue.get(i), addCartButtons.get(i));
+		clickOnMouseHoverItems(productsDesc.get(i), addCartButtons.get(i));
 		String cartProductDesc = getText(titleOfAddedProduct);
 		String cartProductPrice = getText(priceOfAddedProduct);
 		String qauantityOfProduct = getText(qauantityOfAddedProduct);
@@ -218,7 +225,9 @@ public class MyStorePage extends CommonMethods {
 		Verify.assertTrue(qauantityOfProduct.equals("1"), "Product quantity failed to match");
 		Verify.assertFalse(atrributeOfProduct.isEmpty(), "Product attribute failed to match");
 		Verify.assertAll();
-		Reporter.log("Right Product Has been added successfully", true);
+		Reporter.log("Right Product Has been added successfully With Discount", true);
+		clickOnElement(closeWindowCart, "close Window Icon");
+		checkPageIsReady();
 		return this;
 	}
 
