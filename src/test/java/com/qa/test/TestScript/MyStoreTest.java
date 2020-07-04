@@ -18,7 +18,7 @@ public class MyStoreTest extends DriverTech {
 	/*
 	 * 
 	 */
-	@Test(enabled = false, groups = { Groups.AIRTELX })
+	@Test(enabled = true, groups = { Groups.AIRTELX })
 	public void verifyUseCaseOne() {
 		Reporter.log("Go to Popular items section");
 		Reporter.log("Check items with the lowest price and add into the Cart");
