@@ -4,7 +4,7 @@ This is an Automation FrameWork supporting Selenium, RestAssured, WinAppDriver a
 
 AirTelXLabs Assignments Related:
 
-Please access below directories
+Please access below directories(Use Go To File above)
 
 PageClass: src/main/java/com/qa/test/pages/MyStorePage.java
 
