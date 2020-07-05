@@ -116,9 +116,8 @@ public class MyStorePage extends CommonMethods {
 			action = new Actions(this.driver);
 			action.moveToElement(target);
 			action.moveToElement(clickableElement);
-			action.clickAndHold(clickableElement).release();
 			action.click(clickableElement).build().perform();
-			Thread.sleep(500);
+			Thread.sleep(1500);
 			clickOnElement(clickableElement, clickableElement.getText());
 			Reporter.log("Successfully clicked on " + clickableElement.getText());
 		} catch (Exception e) {
