@@ -8,6 +8,10 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 
+/*
+ * This Class represents the page Object of SelectADeliveryAddress
+ */
+
 public class SelectADeliveryAddress extends CommonMobileMethods {
 
 	@AndroidFindBy(className = "")
