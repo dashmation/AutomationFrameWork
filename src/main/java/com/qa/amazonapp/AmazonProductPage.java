@@ -12,6 +12,10 @@ import io.appium.java_client.android.nativekey.AndroidKey;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 
+/*
+ * This Class represents the page Object of AmazonProductPage
+ */
+
 public class AmazonProductPage extends CommonMobileMethods {
 
 	@AndroidFindBy(className = "")
