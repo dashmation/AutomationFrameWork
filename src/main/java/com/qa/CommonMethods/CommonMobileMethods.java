@@ -4,6 +4,7 @@ import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -32,7 +33,8 @@ public class CommonMobileMethods extends DriverTech {
 	WebDriverWait wait;
 	TouchActions performTouch;
 
-	final long fluentWaitPoolingTime = Long.valueOf(CommonUtils.getValue("fluentWaitInterval"));
+	public final long fluentWaitPoolingTime = Long.valueOf(CommonUtils.getValue("fluentWaitInterval"));
+	public final long retry = Long.valueOf(CommonUtils.getValue("retry"));
 
 	@AndroidFindBy(className = "UIAKeyboard")
 	protected AndroidElement keyboard;
@@ -41,13 +43,17 @@ public class CommonMobileMethods extends DriverTech {
 		ENGLISH, HINDI;
 	}
 
+	public enum DIRECTION {
+		UP, DOWN, RIGHT, LEFT;
+	}
+
 	public CommonMobileMethods(AppiumDriver<?> driver) {
 		this.driver = driver;
 		PageFactory.initElements(new AppiumFieldDecorator(driver), this);
 	}
 
 	public void sendText(MobileElement textBox, String input) {
-		checkPageIsReady();
+		fluentWait(textBox);
 		try {
 			textBox.clear();
 			textBox.sendKeys(input);
@@ -60,11 +66,10 @@ public class CommonMobileMethods extends DriverTech {
 	}
 
 	public void clickOnElement(MobileElement element, String NameOfTheElement) {
-		checkPageIsReady();
+		fluentWait(element);
 		try {
-			wait = new WebDriverWait(driver, Long.parseLong(CommonUtils.getValue("explicitelyWait")));
-			wait.until(ExpectedConditions.elementToBeClickable(element));
-			element.click();
+			performTouch = new TouchActions(this.driver);
+			performTouch.singleTap(element);
 			Reporter.log("Clicked On " + NameOfTheElement + " Successfully");
 			System.out.println("Clicked On " + NameOfTheElement + " Successfully");
 		} catch (Exception e) {
@@ -146,7 +151,7 @@ public class CommonMobileMethods extends DriverTech {
 	}
 
 	public void switchToFrame(MobileElement element) {
-		checkPageIsReady();
+		fluentWait(element);
 		try {
 			driver.switchTo().frame(element);
 			Reporter.log("Switch To Frame successfully", true);
@@ -174,10 +179,27 @@ public class CommonMobileMethods extends DriverTech {
 		return outPut;
 	}
 
-	public void scrollUpto(MobileElement element) {
+	public void scroll(DIRECTION direction) {
 		try {
+			HashMap<String, String> scrollObject = new HashMap<String, String>();
+			switch (direction) {
+			case UP:
+				scrollObject.put("direction", "up");
+				break;
+			case DOWN:
+				scrollObject.put("direction", "down");
+				break;
+			case RIGHT:
+				scrollObject.put("direction", "right");
+				break;
+			case LEFT:
+				scrollObject.put("direction", "left");
+				break;
+			default:
+				break;
+			}
 			javaScriptexe = (JavascriptExecutor) driver;
-			javaScriptexe.executeScript("arguments[0].scrollIntoView(true);", element);
+			javaScriptexe.executeScript("mobile: scroll", scrollObject);
 		} catch (Exception e) {
 			Reporter.log("Unable to perform due to " + e.getMessage());
 		}
@@ -192,10 +214,10 @@ public class CommonMobileMethods extends DriverTech {
 		}
 	}
 
-	public void fluentWait(int retry, MobileElement element) {
+	public void fluentWait(MobileElement element) {
 		try {
 			int counter = 0;
-			while (counter <= 10) {
+			while (counter <= retry) {
 				if (isElementDisplayed(element)) {
 					break;
 				} else {
@@ -210,11 +232,8 @@ public class CommonMobileMethods extends DriverTech {
 		}
 	}
 
-	public void scrollToView() {
-	}
-
-	public void touchActions() {
+	public void scrollToView(MobileElement element) {
 		performTouch = new TouchActions(this.driver);
-		
+		performTouch.scroll(element, element.getLocation().getX(), element.getLocation().getY());
 	}
 }

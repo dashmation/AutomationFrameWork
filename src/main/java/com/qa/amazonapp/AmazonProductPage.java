@@ -3,12 +3,13 @@ package com.qa.amazonapp;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openqa.selenium.Keys;
-
 import com.qa.CommonMethods.CommonMobileMethods;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.nativekey.AndroidKey;
+import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 
 public class AmazonProductPage extends CommonMobileMethods {
@@ -17,16 +18,16 @@ public class AmazonProductPage extends CommonMobileMethods {
 	private MobileElement searchBox;
 
 	@AndroidFindBy(className = "")
-	private MobileElement product;
+	private List<MobileElement> product;
 
 	@AndroidFindBy(className = "")
-	private MobileElement product_Name;
+	private List<MobileElement> product_Name;
 
 	@AndroidFindBy(className = "")
-	private MobileElement product_Price;
+	private List<MobileElement> product_Price;
 
 	@AndroidFindBy(className = "")
-	private MobileElement product_Description;
+	private List<MobileElement> product_Description;
 
 	@AndroidFindBy(className = "")
 	private MobileElement buyNow;
@@ -42,19 +43,49 @@ public class AmazonProductPage extends CommonMobileMethods {
 
 	public AmazonProductPage(AppiumDriver<?> driver) {
 		super(driver);
+		handleLanguagePOPUP();
 	}
 
-	public AmazonProductPage searchForItem(String item) {
-		sendText(searchBox, item + Keys.ENTER);
+	private AmazonProductPage handleLanguagePOPUP() {
+		if (isElementDisplayed(langSettingPopUp_English)) {
+			clickOnElement(langSettingPopUp_English, getText(langSettingPopUp_English));
+			clickOnElement(langSettingPopUp_SaveChanges, getText(langSettingPopUp_SaveChanges));
+		}
 		return this;
 	}
 
-	public List<String> getDetailsOfItem(String item) {
+	public AmazonProductPage searchForItem(String item) {
+		if (driver instanceof AndroidDriver) {
+			sendText(searchBox, item + AndroidKey.ENTER);
+		} else if (driver instanceof IOSDriver) {
+			sendText(searchBox, item);
+		}
+		return this;
+	}
+
+	public List<String> getDetailsOfItem(int index) {
 		List<String> details = new ArrayList<>();
-		details.add(getText(product_Name));
-		details.add(getText(product_Price));
-		details.add(getText(product_Description));
+		details.add(getText(product_Price.get(index)));
+		details.add(getText(product_Description.get(index)));
 		return details;
+	}
+
+	public AmazonProductPage scrollToDesiredProductAndClick(int index) {
+		scrollToView(product.get(index));
+		clickOnElement(product.get(index), getText(product.get(index)));
+		return this;
+	}
+
+	public AmazonProductPage clickToBuy() {
+		scrollToView(buyNow);
+		clickOnElement(buyNow, getText(buyNow));
+		return this;
+	}
+
+	public AmazonProductPage addToCart() {
+		scrollToView(addToCart);
+		clickOnElement(addToCart, getText(addToCart));
+		return this;
 	}
 
 }

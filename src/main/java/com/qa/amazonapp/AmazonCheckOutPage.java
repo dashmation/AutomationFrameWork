@@ -1,5 +1,8 @@
 package com.qa.amazonapp;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.qa.CommonMethods.CommonMobileMethods;
 
 import io.appium.java_client.AppiumDriver;
@@ -21,9 +24,11 @@ public class AmazonCheckOutPage extends CommonMobileMethods {
 		super(driver);
 	}
 
-	public AmazonCheckOutPage verifyDetailsOfItem() {
-
-		return this;
+	public List<String> getDetailsOfCheckOutItem() {
+		List<String> details = new ArrayList<>();
+		details.add(getText(product_Price));
+		details.add(getText(product_Description));
+		return details;
 	}
 
 	public AmazonCheckOutPage clickToOrder() {

@@ -17,10 +17,20 @@ public class SelectPaymentMethod extends CommonMobileMethods {
 	private List<MobileElement> moreWaysToPay;
 
 	@AndroidFindBy(className = "")
+	private MobileElement payOnDelivery;
+
+	@AndroidFindBy(className = "")
 	private MobileElement continueButton;
 
 	public SelectPaymentMethod(AppiumDriver<?> driver) {
 		super(driver);
+	}
+
+	public SelectPaymentMethod clickPayOnDeliveryAndContinue() {
+		scrollToView(payOnDelivery);
+		clickOnElement(payOnDelivery, getText(payOnDelivery));
+		clickOnElement(continueButton, getText(continueButton));
+		return this;
 	}
 
 }

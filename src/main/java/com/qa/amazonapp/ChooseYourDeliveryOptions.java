@@ -15,4 +15,10 @@ public class ChooseYourDeliveryOptions extends CommonMobileMethods {
 		super(driver);
 	}
 
+	public ChooseYourDeliveryOptions clickToContinue() {
+		scrollToView(continueButton);
+		clickOnElement(continueButton, getText(continueButton));
+		return this;
+	}
+
 }

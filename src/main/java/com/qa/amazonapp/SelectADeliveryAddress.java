@@ -14,10 +14,24 @@ public class SelectADeliveryAddress extends CommonMobileMethods {
 	private List<MobileElement> addresses;
 
 	@AndroidFindBy(className = "")
+	private List<MobileElement> addressesInName;
+
+	@AndroidFindBy(className = "")
 	private List<MobileElement> deliverToThisAddress;
 
 	public SelectADeliveryAddress(AppiumDriver<?> driver) {
 		super(driver);
+	}
+
+	public SelectADeliveryAddress selectAddressAndCotinue(String Name) {
+		for (int counter = 0; counter < addresses.size(); counter++) {
+			if (addressesInName.get(counter).getText().equals(Name)) {
+				clickOnElement(addresses.get(counter), getText(addresses.get(counter)));
+				clickOnElement(deliverToThisAddress.get(counter), getText(deliverToThisAddress.get(counter)));
+				break;
+			}
+		}
+		return this;
 	}
 
 }
