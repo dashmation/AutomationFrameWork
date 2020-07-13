@@ -1,4 +1,4 @@
-package com.qa.test.TestScript;
+package com.test.TestScript;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;

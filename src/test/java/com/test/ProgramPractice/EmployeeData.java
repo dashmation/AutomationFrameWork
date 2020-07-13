@@ -1,4 +1,4 @@
-package com.qa.test.ProgramPractice;
+package com.test.ProgramPractice;
 
 public class EmployeeData {
 	private String name;

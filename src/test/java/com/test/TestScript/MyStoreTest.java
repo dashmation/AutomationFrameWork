@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.qa.test.TestScript;
+package com.test.TestScript;
 
 import org.testng.Reporter;
 import org.testng.annotations.Test;

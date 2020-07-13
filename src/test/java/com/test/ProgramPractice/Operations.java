@@ -1,4 +1,4 @@
-package com.qa.test.ProgramPractice;
+package com.test.ProgramPractice;
 
 import java.util.ArrayList;
 import java.util.Arrays;

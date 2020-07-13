@@ -1,4 +1,4 @@
-package com.qa.test.ProgramPractice;
+package com.test.ProgramPractice;
 
 interface OperationBluePrint {
 	final int value1=0;
