@@ -4,6 +4,7 @@ import org.testng.Assert;
 import org.testng.Reporter;
 
 import com.qa.CommonMethods.CommonMobileMethods;
+import com.qa.utility.CommonUtils;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
@@ -44,7 +45,6 @@ public class AmazonLoginPage extends CommonMobileMethods {
 		default:
 			break;
 		}
-		selectAlreadyACustomerThenSignIn();
 	}
 
 	private AmazonLoginPage selectLanguage(LANGUAGE language) {
@@ -74,7 +74,7 @@ public class AmazonLoginPage extends CommonMobileMethods {
 
 	private AmazonLoginPage enterUserNameAndClickNext() {
 		try {
-			sendText(mobileNumberTextBox, "username");
+			sendText(mobileNumberTextBox, CommonUtils.getValue("username"));
 			clickOnElement(continueButton, "Continue Button");
 			Assert.assertTrue(isElementDisplayed(passwordTextBox), "No Password Page is displaying");
 		} catch (Exception e) {
@@ -86,7 +86,7 @@ public class AmazonLoginPage extends CommonMobileMethods {
 
 	private AmazonLoginPage enterPasswordAndClickLogin() {
 		try {
-			sendText(passwordTextBox, "password");
+			sendText(passwordTextBox, CommonUtils.getValue("password"));
 			clickOnElement(loginButton, "login button");
 			Assert.assertTrue(!isElementsDisplayed(passwordTextBox, loginButton), "Password Page is still displaying");
 		} catch (Exception e) {
@@ -97,6 +97,7 @@ public class AmazonLoginPage extends CommonMobileMethods {
 	}
 
 	public AmazonProductPage loginToAmazon() {
+		selectAlreadyACustomerThenSignIn();
 		enterUserNameAndClickNext();
 		enterPasswordAndClickLogin();
 		return new AmazonProductPage((AppiumDriver<?>) this.driver);

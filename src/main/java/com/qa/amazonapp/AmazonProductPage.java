@@ -41,6 +41,16 @@ public class AmazonProductPage extends CommonMobileMethods {
 	@AndroidFindBy(className = "")
 	private MobileElement langSettingPopUp_SaveChanges;
 
+	private List<String> productDetails;
+
+	public List<String> getProductDetails() {
+		return productDetails;
+	}
+
+	public void setProductDetails(List<String> productDetails) {
+		this.productDetails = productDetails;
+	}
+
 	public AmazonProductPage(AppiumDriver<?> driver) {
 		super(driver);
 		handleLanguagePOPUP();
@@ -63,11 +73,12 @@ public class AmazonProductPage extends CommonMobileMethods {
 		return this;
 	}
 
-	public List<String> getDetailsOfItem(int index) {
+	public AmazonProductPage getDetailsOfItem(int index) {
 		List<String> details = new ArrayList<>();
 		details.add(getText(product_Price.get(index)));
 		details.add(getText(product_Description.get(index)));
-		return details;
+		setProductDetails(details);
+		return this;
 	}
 
 	public AmazonProductPage scrollToDesiredProductAndClick(int index) {
@@ -86,6 +97,10 @@ public class AmazonProductPage extends CommonMobileMethods {
 		scrollToView(addToCart);
 		clickOnElement(addToCart, getText(addToCart));
 		return this;
+	}
+
+	public int totalProduct() {
+		return product.size();
 	}
 
 }
