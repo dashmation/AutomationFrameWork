@@ -3,7 +3,7 @@ package com.qa.test.TestScript;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.automation.frameWork.baseTest.DriverTech;
+import com.qa.basePack.DriverTech;
 
 public class TestClass extends DriverTech {
 

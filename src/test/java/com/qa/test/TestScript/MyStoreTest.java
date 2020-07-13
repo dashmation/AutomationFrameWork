@@ -6,9 +6,9 @@ package com.qa.test.TestScript;
 import org.testng.Reporter;
 import org.testng.annotations.Test;
 
-import com.automation.frameWork.baseTest.DriverTech;
-import com.qa.test.pages.MyStorePage;
-import com.qa.test.utility.Groups;
+import com.qa.basePack.DriverTech;
+import com.qa.pages.MyStorePage;
+import com.qa.utility.Groups;
 
 /**
  * This Class is to Contains Test Methods for Test Cases

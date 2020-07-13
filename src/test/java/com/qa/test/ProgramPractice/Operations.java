@@ -10,8 +10,8 @@ import java.util.Scanner;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import com.qa.test.pojo.EmployeSkillDetails;
-import com.qa.test.pojo.Skill;
+import com.qa.pojo.EmployeSkillDetails;
+import com.qa.pojo.Skill;
 
 public class Operations {
 
