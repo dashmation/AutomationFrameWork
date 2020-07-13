@@ -9,6 +9,10 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 
+/*
+ * This Class represents the page Object of AmazonCheckOutPage
+ */
+
 public class AmazonCheckOutPage extends CommonMobileMethods {
 
 	@AndroidFindBy(className = "")
