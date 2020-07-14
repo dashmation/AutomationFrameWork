@@ -32,6 +32,13 @@ public class DriverTech {
 	final String browser = CommonUtils.getValue("browser").toLowerCase();
 	final String appName = CommonUtils.getValue("appName");
 	final String autoType = CommonUtils.getValue("automationOn");
+	final String app = CommonUtils.getValue("app");
+	final String deviceName = CommonUtils.getValue("deviceName");
+	final String udid = CommonUtils.getValue("udid");
+	final String AndroiddeviceName = CommonUtils.getValue("AndroiddeviceName");
+	final String platformVersion = CommonUtils.getValue("platformVersion");
+	final String appPackage = CommonUtils.getValue("appPackage");
+	final String appActivity = CommonUtils.getValue("appActivity");
 	public ChromeOptions options;
 
 	public void launchApplication() {
@@ -106,9 +113,9 @@ public class DriverTech {
 
 	public void launchWindowApplication() {
 		DesiredCapabilities desCap = new DesiredCapabilities();
-		desCap.setCapability("app", CommonUtils.getValue("app"));
-		desCap.setCapability("platformName", CommonUtils.getValue("platformName"));
-		desCap.setCapability("deviceName", CommonUtils.getValue("deviceName"));
+		desCap.setCapability("app", app);
+		desCap.setCapability("platformName", Platform.WINDOWS);
+		desCap.setCapability("deviceName", deviceName);
 		try {
 			windowSession = new WindowsDriver<WindowsElement>(new URL("http://127.0.0.1:4723"), desCap);
 			Reporter.log(CommonUtils.getValue("appName") + " has been launched successfully");
@@ -123,12 +130,12 @@ public class DriverTech {
 		new DesiredCapabilities();
 		DesiredCapabilities desCap = DesiredCapabilities.android();
 		desCap.setCapability(MobileCapabilityType.PLATFORM_NAME, Platform.ANDROID);
-		desCap.setCapability(MobileCapabilityType.UDID, CommonUtils.getValue("udid"));
+		desCap.setCapability(MobileCapabilityType.UDID, udid);
 		desCap.setCapability(MobileCapabilityType.NO_RESET, false);
-		desCap.setCapability("deviceName", CommonUtils.getValue("deviceName"));
-		desCap.setCapability("platformVersion", CommonUtils.getValue("platformVersion"));
-		desCap.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, CommonUtils.getValue("appPackage"));
-		desCap.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, CommonUtils.getValue("appActivity"));
+		desCap.setCapability("deviceName", AndroiddeviceName);
+		desCap.setCapability("platformVersion", platformVersion);
+		desCap.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, appPackage);
+		desCap.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, appActivity);
 		try {
 			driver = new AndroidDriver<MobileElement>(new URL("http://127.0.0.1:4723/wd/hub"), desCap);
 			Reporter.log(CommonUtils.getValue("appName") + " has been launched successfully");

@@ -29,7 +29,7 @@ public class SelectADeliveryAddress extends CommonMobileMethods {
 
 	public SelectADeliveryAddress selectAddressAndCotinue(String Name) {
 		for (int counter = 0; counter < addresses.size(); counter++) {
-			if (addressesInName.get(counter).getText().equals(Name)) {
+			if (getText(addressesInName.get(counter)).equals(Name)) {
 				clickOnElement(addresses.get(counter), getText(addresses.get(counter)));
 				clickOnElement(deliverToThisAddress.get(counter), getText(deliverToThisAddress.get(counter)));
 				break;

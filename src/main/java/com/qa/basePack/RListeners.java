@@ -33,12 +33,12 @@ public class RListeners implements ITestListener {
 
 	@Override
 	public void onStart(ITestContext context) {
-		Reporter.log(context.getName() + " onStart");
+		Reporter.log(context.getName() + " onStart", true);
 	}
 
 	@Override
 	public void onFinish(ITestContext context) {
-		Reporter.log(context.getName() + " onFinish");
+		Reporter.log(context.getName() + " onFinish", true);
 	}
 
 }
