@@ -10,9 +10,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import com.tmobile.secureid.qa.data.SecureIdData;
+import com.JAVAPOJO;
 
-public class SecureIdRequestBuilder {
+public class RequestBuilder {
 
 	public enum DAT_REQUESTTYPE {
 		DAT_TOKEN_V4, DAT_TOKEN_V3, DEVICEObject, CARRIER_TOKEN_INFO, TOKEN1, TOKEN2, DEVICE_ATTRIBUTESObject, IAMObject
@@ -23,7 +23,7 @@ public class SecureIdRequestBuilder {
 	}
 
 	@SuppressWarnings({ "unchecked", "static-access" })
-	public static JSONObject getDATRequestBody(DAT_REQUESTTYPE DAT_REQUESTTYPE, SecureIdData secureIdData) {
+	public static JSONObject getDATRequestBody(DAT_REQUESTTYPE DAT_REQUESTTYPE, JAVAPOJO javapojo) {
 		JSONObject jsonObject = new JSONObject();
 		switch (DAT_REQUESTTYPE) {
 		case DAT_TOKEN_V3:
@@ -40,14 +40,14 @@ public class SecureIdRequestBuilder {
 			jsonObject.put("device", getDATRequestBody(DAT_REQUESTTYPE.DEVICEObject, secureIdData));
 
 			List<HashMap<String, JSONObject>> jsonArrayListCARRIER_TOKEN_INFO = new ArrayList<HashMap<String, JSONObject>>();
-			jsonArrayListCARRIER_TOKEN_INFO.add(getDATRequestBody(DAT_REQUESTTYPE.TOKEN1, secureIdData));
-			jsonArrayListCARRIER_TOKEN_INFO.add(getDATRequestBody(DAT_REQUESTTYPE.TOKEN2, secureIdData));
+			jsonArrayListCARRIER_TOKEN_INFO.add(getDATRequestBody(DAT_REQUESTTYPE.TOKEN1, javapojo));
+			jsonArrayListCARRIER_TOKEN_INFO.add(getDATRequestBody(DAT_REQUESTTYPE.TOKEN2, javapojo));
 			jsonObject.put("carrier_token_info", jsonArrayListCARRIER_TOKEN_INFO);
 
 			jsonObject.put("Device_Attributes",
-					getDATRequestBody(DAT_REQUESTTYPE.DEVICE_ATTRIBUTESObject, secureIdData));
+					getDATRequestBody(DAT_REQUESTTYPE.DEVICE_ATTRIBUTESObject, javapojo));
 			jsonObject.put("trans_id", "TestiOSProduction2020-06-10 16:06");
-			jsonObject.put("iam", getDATRequestBody(DAT_REQUESTTYPE.IAMObject, secureIdData));
+			jsonObject.put("iam", getDATRequestBody(DAT_REQUESTTYPE.IAMObject, javapojo));
 			jsonObject.put("isPushNotificationsEnabled", "true");
 			break;
 		case DEVICEObject:
@@ -115,7 +115,7 @@ public class SecureIdRequestBuilder {
 	}
 
 	@SuppressWarnings({ "unchecked", "static-access" })
-	public static JSONObject getForgotPasswordRequest(FP_REQUESTTYPE FP_REQUESTTYPE, SecureIdData secureIdData) {
+	public static JSONObject getForgotPasswordRequest(FP_REQUESTTYPE FP_REQUESTTYPE, JAVAPOJO javapojo) {
 		JSONObject jsonObject = new JSONObject();
 		switch (FP_REQUESTTYPE) {
 		case URLPARAMETERS:
@@ -134,17 +134,17 @@ public class SecureIdRequestBuilder {
 			jsonObject.put("transId", "1591264511456_rjmjm_7032114298");
 		case FORGOTPASSWORD_VALIDATESECURITY_ANSWERS:
 			List<JSONObject> SECURITYANSWERS = new ArrayList<JSONObject>();
-			SECURITYANSWERS.add(getForgotPasswordRequest(FP_REQUESTTYPE.ANSWER1, secureIdData));
-			SECURITYANSWERS.add(getForgotPasswordRequest(FP_REQUESTTYPE.ANSWER2, secureIdData));
+			SECURITYANSWERS.add(getForgotPasswordRequest(FP_REQUESTTYPE.ANSWER1, javapojo));
+			SECURITYANSWERS.add(getForgotPasswordRequest(FP_REQUESTTYPE.ANSWER2, javapojo));
 			jsonObject.put("securityAnswers", SECURITYANSWERS);
 			jsonObject.put("transId", secureIdData.getZipCode());
-			jsonObject.put("iam", getDATRequestBody(DAT_REQUESTTYPE.IAMObject, secureIdData));
+			jsonObject.put("iam", getDATRequestBody(DAT_REQUESTTYPE.IAMObject, javapojo));
 			break;
 		case ANSWER1:
-			jsonObject.put("answer", secureIdData.getSecurityQuestionAns1());
+			jsonObject.put("answer", javapojo.getSecurityQuestionAns1());
 			break;
 		case ANSWER2:
-			jsonObject.put("answer", secureIdData.getSecurityQuestionAns2());
+			jsonObject.put("answer", javapojo.getSecurityQuestionAns2());
 			break;
 		default:
 			break;
@@ -153,7 +153,7 @@ public class SecureIdRequestBuilder {
 	}
 //@Test(sec)
 	public static void main(String[] args) {
-		SecureIdData s = new SecureIdData();
+		JAVAPOJO s = new JAVAPOJO();
 		s.setSecurityQuestionAns1("ans2");
 		s.setSecurityQuestionAns2("ans4");
 		s.setZipCode("6986686");
