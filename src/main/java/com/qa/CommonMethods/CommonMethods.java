@@ -183,4 +183,8 @@ public class CommonMethods extends DriverTech {
 		} catch (Exception e) {
 		}
 	}
+	
+	public void redirectTo(String URI) {
+		driver.get(URI);
+	}
 }
