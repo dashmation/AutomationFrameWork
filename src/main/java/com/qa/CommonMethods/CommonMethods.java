@@ -1,16 +1,12 @@
 package com.qa.CommonMethods;
 
-import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
@@ -67,10 +63,7 @@ public class CommonMethods extends DriverTech {
 		try {
 			javaScriptexe = (JavascriptExecutor) driver;
 			for (int retry = 1; retry < 6; retry++) {
-				boolean pageLoaded = (boolean) javaScriptexe.executeScript("return document.readyState==='complete'");
-				if (pageLoaded) {
-					break;
-				}
+				javaScriptexe.executeScript("return document.readyState==='complete'");
 			}
 		} catch (Exception e) {
 			Reporter.log("Unable to perform checkPageIsReady due to " + e.getMessage());
@@ -145,16 +138,6 @@ public class CommonMethods extends DriverTech {
 			Reporter.log("Unable to switch To frame due to" + noSuchElement.getMessage(), true);
 		} catch (Exception e) {
 			Reporter.log("Unable to switch To frame due to" + e.getMessage(), true);
-		}
-	}
-
-	public void takeScreenShotFor(String userDefindName) {
-		try {
-			File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-			FileUtils.copyFile(src,
-					new File(CommonUtils.getValue("screenshots") + "/" + userDefindName + getDate() + ".jpeg"));
-		} catch (Exception e) {
-			Reporter.log("Failed to take screenshot due to" + e.getMessage());
 		}
 	}
 

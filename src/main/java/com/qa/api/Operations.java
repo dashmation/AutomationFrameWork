@@ -1,9 +1,9 @@
 package com.qa.api;
 
-import static com.jayway.restassured.RestAssured.*;
+import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 
-import com.jayway.restassured.http.ContentType;
+import io.restassured.http.ContentType;
 
 
 public class Operations {

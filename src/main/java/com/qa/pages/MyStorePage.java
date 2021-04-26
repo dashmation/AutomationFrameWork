@@ -163,7 +163,7 @@ public class MyStorePage extends CommonMethods {
 	 * Getting the List of Price
 	 */
 	private List<Float> getPriceList(List<WebElement> pricelistElements) {
-		List<Float> priceList = new ArrayList<>();
+		List<Float> priceList = new ArrayList<Float>();
 		for (int counter = 0; counter < pricelistElements.size() / 2; counter++) {
 			priceList.add(Float.valueOf(activePrices.get(counter).getText().trim().replace("$", "")));
 		}

@@ -1,6 +1,6 @@
 package com.qa.stepDefinition;
 
-import com.qa.basePack.DriverTech;
+import com.qa.basePack.CommonTest;
 import com.qa.pages.Calculator;
 import com.qa.pages.GooglePage;
 
@@ -10,7 +10,7 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
-public class AssignmentStepDefinition extends DriverTech {
+public class AssignmentStepDefinition extends CommonTest {
 
 	GooglePage googlePage = null;
 	Calculator calc = null;

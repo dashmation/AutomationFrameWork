@@ -1,9 +1,18 @@
 package com.qa.basePack;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Base64;
 import java.util.InputMismatchException;
 
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.Cookie;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Platform;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -12,8 +21,6 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.Assert;
 import org.testng.Reporter;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 
 import com.qa.utility.CommonUtils;
 
@@ -39,28 +46,33 @@ public class DriverTech {
 	final String platformVersion = CommonUtils.getValue("platformVersion");
 	final String appPackage = CommonUtils.getValue("appPackage");
 	final String appActivity = CommonUtils.getValue("appActivity");
+	String screenshotPath = null;
+	boolean flag = false;
 	public ChromeOptions options;
+	
+	public WebDriver getDriver() {
+		return driver;
+	}
 
 	public void launchApplication() {
 		try {
 			String directory = System.getProperty("directory");
-			switch (browser.toLowerCase()) {
-			case "chrome":
+			if (browser.toLowerCase().equals("chrome")) {
 				System.setProperty("webdriver.chrome.driver", directory);
 				driver = new ChromeDriver();
 				Reporter.log(browser + "Launched Successfully");
-				break;
-			case "mozila":
+
+			} else if (browser.toLowerCase().equals("mozila")) {
 				System.setProperty("webdriver.gecko.driver", directory);
 				driver = new FirefoxDriver();
 				Reporter.log(browser + "Launched Successfully");
-				break;
-			case "ie":
+
+			} else if (browser.toLowerCase().equals("ie")) {
 				System.setProperty("webdriver.ie.driver", directory);
 				driver = new InternetExplorerDriver();
 				Reporter.log(browser + "Launched Successfully");
-				break;
-			default:
+
+			} else {
 				throw new InputMismatchException("Please enter valid input");
 			}
 			driver.manage().window().maximize();
@@ -72,33 +84,23 @@ public class DriverTech {
 
 	public void launchApplicationWithWebDriverManager() {
 		try {
-			switch (browser.toLowerCase()) {
-			case "chrome":
+			if (browser.toLowerCase().equals("chrome")) {
 				WebDriverManager.chromedriver().setup();
 				driver = new ChromeDriver();
-				Reporter.log(browser + " Launched Successfully");
-				System.out.println(browser.toUpperCase() + " Launched Successfully");
-				break;
-			case "firefox":
+				Reporter.log(browser + "Launched Successfully");
+
+			} else if (browser.toLowerCase().equals("mozila")) {
 				WebDriverManager.firefoxdriver().setup();
 				driver = new FirefoxDriver();
-				Reporter.log(browser + " Launched Successfully");
-				System.out.println(browser.toUpperCase() + " Launched Successfully");
-				break;
-			case "ie":
+				Reporter.log(browser + "Launched Successfully");
+
+			} else if (browser.toLowerCase().equals("ie")) {
 				WebDriverManager.iedriver().setup();
 				driver = new InternetExplorerDriver();
-				Reporter.log(browser + " Launched Successfully");
-				System.out.println(browser.toUpperCase() + " Launched Successfully");
-				break;
-			default:
-				WebDriverManager.chromedriver().setup();
-				ChromeOptions options = new ChromeOptions();
-				options.addArguments("--headless");
-				options.addArguments("--disable-gpu");
-				driver = new ChromeDriver(options);
-				Reporter.log("Headless browser launched Successfully");
-				break;
+				Reporter.log(browser + "Launched Successfully");
+
+			} else {
+				throw new InputMismatchException("Please enter valid input");
 			}
 			driver.manage().window().maximize();
 			if (!uri.isEmpty()) {
@@ -147,38 +149,128 @@ public class DriverTech {
 	}
 
 	protected void clearCookies() {
-		driver.manage().deleteAllCookies();
+		getDriver().manage().deleteAllCookies();
 		Reporter.log("All cookies cleared");
 	}
 
-	@BeforeMethod
-	public void setUp() {
-		switch (autoType.toLowerCase()) {
-		case "web":
-			launchApplicationWithWebDriverManager();
-			break;
-		case "windows":
-			launchWindowApplication();
-			break;
-		case "android":
-			launchAndroidApp();
-			break;
-		default:
-			Assert.fail("Failed to Start since invalid autoType given");
-			break;
-		}
+	public void addCookie(String name, String value) {
+		Cookie ck = new Cookie(name, value);
+		getDriver().manage().addCookie(ck);
 	}
 
-	@AfterMethod
-	public void tearDown() {
-		if (driver != null) {
-			driver.quit();
-			Reporter.log(browser.toUpperCase() + " closed Successfully");
-			System.out.println(browser.toUpperCase() + " closed Successfully");
-		} else if (windowSession != null) {
-			windowSession.quit();
-			Reporter.log(appName + " App closed Successfully");
-			System.out.println(appName + " App closed Successfully");
-		}
+	protected String getCookieByName(String key) {
+		return getDriver().manage().getCookieNamed(key).toString();
 	}
+
+	protected String getScreenShot(String userDefindName) {
+		String path = "";
+		File src = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
+		File Dest = new File("./" + screenshotPath + "/" + userDefindName + getDate() + ".jpg");
+		try {
+			FileUtils.copyFile(src, Dest);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		path = Dest.getAbsolutePath();
+		return path;
+	}
+
+	protected String takeScreenShotFor(String userDefindName) {
+		String fileString = "";
+		try {
+			if (flag == true) {
+				byte[] fileContent = FileUtils.readFileToByteArray(new File(getScreenShot(userDefindName)));
+				String encodedString = Base64.getEncoder().encodeToString(fileContent);
+				fileString = "data:image/jpg;base64," + encodedString;
+			} else {
+				TakesScreenshot newScreen = (TakesScreenshot) this.driver;
+				String scnShot = newScreen.getScreenshotAs(OutputType.BASE64);
+				fileString = "data:image/jpg;base64, " + scnShot;
+			}
+		} catch (Exception e) {
+			Reporter.log("Failed to take screenshot due to" + e.getMessage(), true);
+			e.printStackTrace();
+		}
+		System.out.println(fileString);
+		return fileString;
+	}
+
+	protected String getDate() {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+		LocalDateTime now = LocalDateTime.now();
+		String outPut = dtf.format(now);
+		return outPut;
+	}
+
+	public enum DATE_FORMATS {
+		yyyyMMdd, yyyyFSlASHMMFSlASHdd, ddHYPENMMHYPENyyyy, yyyyHYPENMMHYPENdd, ddFSlASHMMFSlASHyyyy,
+		MMFSlASHddFSlASHyyyy;
+	}
+
+	protected String getDate(DATE_FORMATS DATE_FORMATS) {
+		DateTimeFormatter dtf = null;
+		switch (DATE_FORMATS) {
+			case yyyyMMdd:
+				dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
+				break;
+			case yyyyFSlASHMMFSlASHdd:
+				dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+				break;
+			case ddHYPENMMHYPENyyyy:
+				dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+				break;
+			case yyyyHYPENMMHYPENdd:
+				dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+				break;
+			case ddFSlASHMMFSlASHyyyy:
+				dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+				break;
+			case MMFSlASHddFSlASHyyyy:
+				dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+				break;
+			default:
+				break;
+		}
+		LocalDateTime now = LocalDateTime.now();
+		String outPut = dtf.format(now);
+		System.out.println(outPut);
+		return outPut;
+	}
+
+	protected String getDate(DATE_FORMATS DATE_FORMATS, long minusdays) {
+		DateTimeFormatter dtf = null;
+		switch (DATE_FORMATS) {
+			case yyyyMMdd:
+				dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
+				break;
+			case yyyyFSlASHMMFSlASHdd:
+				dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+				break;
+			case ddHYPENMMHYPENyyyy:
+				dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+				break;
+			case yyyyHYPENMMHYPENdd:
+				dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+				break;
+			case ddFSlASHMMFSlASHyyyy:
+				dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+				break;
+			case MMFSlASHddFSlASHyyyy:
+				dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+				break;
+			default:
+				break;
+		}
+		LocalDateTime now = LocalDateTime.now().minusDays(minusdays);
+		String outPut = dtf.format(now);
+		System.out.println(outPut);
+		return outPut;
+	}
+
+	public String getPropertyValueBasedOn(String key) {
+		String value = System.getProperty(key);
+		return value;
+	}
+
 }

@@ -6,8 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
-import com.jayway.restassured.response.Response;
 import com.qa.api.Operations;
 import com.qa.api.RestAssuredExtension;
 import com.qa.pojo.PostsPojo;
@@ -15,6 +13,7 @@ import com.qa.pojo.PostsPojo;
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
+import io.restassured.response.Response;
 
 public class APIStepDefinition {
 	Operations operations;

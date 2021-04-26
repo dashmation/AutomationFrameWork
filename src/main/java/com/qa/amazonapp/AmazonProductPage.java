@@ -78,7 +78,7 @@ public class AmazonProductPage extends CommonMobileMethods {
 	}
 
 	public AmazonProductPage getDetailsOfItem(int index) {
-		List<String> details = new ArrayList<>();
+		List<String> details = new ArrayList<String>();
 		details.add(getText(product_Price.get(index)));
 		details.add(getText(product_Description.get(index)));
 		setProductDetails(details);

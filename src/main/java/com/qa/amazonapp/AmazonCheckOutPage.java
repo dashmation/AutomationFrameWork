@@ -29,7 +29,7 @@ public class AmazonCheckOutPage extends CommonMobileMethods {
 	}
 
 	public List<String> getDetailsOfCheckOutItem() {
-		List<String> details = new ArrayList<>();
+		List<String> details = new ArrayList<String>();
 		details.add(getText(product_Price));
 		details.add(getText(product_Description));
 		return details;

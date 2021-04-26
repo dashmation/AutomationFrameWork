@@ -7,14 +7,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import org.apache.http.entity.ContentType;
 import org.json.simple.JSONObject;
 import org.testng.Reporter;
 
-import com.jayway.restassured.RestAssured;
-import com.jayway.restassured.builder.RequestSpecBuilder;
-import com.jayway.restassured.response.Response;
-import com.jayway.restassured.specification.RequestSpecification;
+import io.restassured.RestAssured;
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 
 public class PerformOperations {
 	public static RequestSpecification requestSpecification;
@@ -160,7 +160,7 @@ public class PerformOperations {
 	public PerformOperations() {
 		RequestSpecBuilder requestSpecBuilder = new RequestSpecBuilder();
 		requestSpecBuilder.setBaseUri("http://localhost:3000/testbase");
-		requestSpecBuilder.setContent(ContentType.APPLICATION_JSON);
+		requestSpecBuilder.setContentType(ContentType.JSON);
 		requestSpecBuilder.addHeader("Content-Type", "application/json");
 		requestSpecification = requestSpecBuilder.build();
 		requestSpecification = RestAssured.given().spec(requestSpecification);
@@ -223,46 +223,46 @@ public class PerformOperations {
 	}
 
 	void resetDataTo(List<String> params) {
-		for (String eachParam : params) {
-			String expected = eachParam.replaceAll("&", "").toLowerCase();
-			switch (expected) {
-			case "2fa=true":
-				Reporter.log(getMsisdn() + " ResetTestData to " + expected, true);
-				Reporter.log(getMsisdn() + "'s DataServer JSON updated to " + expected, true);
-				break;
-			case "2fa=false":
-				Reporter.log(getMsisdn() + " ResetTestData to " + expected, true);
-				Reporter.log(getMsisdn() + "'s DataServer JSON updated to " + expected, true);
-				break;
-			case "npah=true":
-				Reporter.log(getMsisdn() + " ResetTestData to " + expected, true);
-				Reporter.log(getMsisdn() + "'s DataServer JSON updated to " + expected, true);
-				break;
-			case "npah=false":
-				Reporter.log(getMsisdn() + " ResetTestData to " + expected, true);
-				Reporter.log(getMsisdn() + "'s DataServer JSON updated to " + expected, true);
-				break;
-			case "2fa=no":
-				Reporter.log(getMsisdn() + " ResetTestData to " + expected, true);
-				Reporter.log(getMsisdn() + "'s DataServer JSON updated to " + expected, true);
-				break;
-			case "npah=no":
-				Reporter.log(getMsisdn() + " ResetTestData to " + expected, true);
-				Reporter.log(getMsisdn() + "'s DataServer JSON updated to " + expected, true);
-				break;
-			case "reg=false":
-				Reporter.log(getMsisdn() + " ResetTestData to " + expected, true);
-				Reporter.log(getMsisdn() + "'s DataServer JSON updated to " + expected, true);
-				break;
-			case "reg=true":
-				Reporter.log(getMsisdn() + " ResetTestData to " + expected, true);
-				Reporter.log(getMsisdn() + "'s DataServer JSON updated to " + expected, true);
-				break;
-			default:
-				Reporter.log("No Method Found for " + expected, true);
-				break;
-			}
-		}
+//		for (String eachParam : params) {
+//			String expected = eachParam.replaceAll("&", "").toLowerCase();
+//			switch (expected) {
+//			case "2fa=true":
+//				Reporter.log(getMsisdn() + " ResetTestData to " + expected, true);
+//				Reporter.log(getMsisdn() + "'s DataServer JSON updated to " + expected, true);
+//				break;
+//			case "2fa=false":
+//				Reporter.log(getMsisdn() + " ResetTestData to " + expected, true);
+//				Reporter.log(getMsisdn() + "'s DataServer JSON updated to " + expected, true);
+//				break;
+//			case "npah=true":
+//				Reporter.log(getMsisdn() + " ResetTestData to " + expected, true);
+//				Reporter.log(getMsisdn() + "'s DataServer JSON updated to " + expected, true);
+//				break;
+//			case "npah=false":
+//				Reporter.log(getMsisdn() + " ResetTestData to " + expected, true);
+//				Reporter.log(getMsisdn() + "'s DataServer JSON updated to " + expected, true);
+//				break;
+//			case "2fa=no":
+//				Reporter.log(getMsisdn() + " ResetTestData to " + expected, true);
+//				Reporter.log(getMsisdn() + "'s DataServer JSON updated to " + expected, true);
+//				break;
+//			case "npah=no":
+//				Reporter.log(getMsisdn() + " ResetTestData to " + expected, true);
+//				Reporter.log(getMsisdn() + "'s DataServer JSON updated to " + expected, true);
+//				break;
+//			case "reg=false":
+//				Reporter.log(getMsisdn() + " ResetTestData to " + expected, true);
+//				Reporter.log(getMsisdn() + "'s DataServer JSON updated to " + expected, true);
+//				break;
+//			case "reg=true":
+//				Reporter.log(getMsisdn() + " ResetTestData to " + expected, true);
+//				Reporter.log(getMsisdn() + "'s DataServer JSON updated to " + expected, true);
+//				break;
+//			default:
+//				Reporter.log("No Method Found for " + expected, true);
+//				break;
+//			}
+//		}
 	}
 
 	public void setValues(Response response) {
@@ -279,8 +279,8 @@ public class PerformOperations {
 	}
 
 	public Response performGetOperation(String queryParamValue) {
-		Response response = RestAssured.given().header("Content-Type", "application/json").then()
-				.get("http://localhost:3000/testbase?" + queryParamValue);
+		Response response = RestAssured.given().header("Content-Type", "application/json").get("http://localhost:3000/testbase?" + queryParamValue);
+				
 		return response;
 	}
 
