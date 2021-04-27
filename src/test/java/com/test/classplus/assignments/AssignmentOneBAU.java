@@ -20,7 +20,7 @@ public class AssignmentOneBAU extends CommonTest {
 
 	}
 
-	public void NowGoToHttpswwwflipkartcom() {
+	public void nowGoToHttpswwwflipkartcom() {
 
 	}
 
