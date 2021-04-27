@@ -10,7 +10,7 @@ public class AssignmentOneTest extends AssignmentOneBAU{
 		searchForiPhoneXR64GBYellowInAmazon();
 		selectTheMatchingPhoneOnceListApears();
 		getThePriceOfTheSelectediPhoneInAmazon();
-		NowGoToHttpswwwflipkartcom();
+		nowGoToHttpswwwflipkartcom();
 		searchForiPhoneXR64GBYellowInFlipkart();
 		getThePriceOfTheSelectediPhoneInFlipkart();
 		compareThePriceOnBothTheWebsiteAndPrintTheLesserInConsole();
